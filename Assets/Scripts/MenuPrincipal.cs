@@ -3,10 +3,13 @@ using UnityEngine.SceneManagement;
 
 public class MenuPrincipal : MonoBehaviour
 {
-    // Carga la escena indicada por su nombre en el Inspector o evento
-    public void CargarEscena(string SampleScene)
+
+// Opción B: Exponerla al Inspector para modificarla en Unity
+    [SerializeField] private string escenaACargar = "Play";
+
+    public void CargarEscena()
     {
-        SceneManager.LoadScene(SampleScene);
+        SceneManager.LoadScene(escenaACargar);
     }
 
     // Cierra la aplicación
