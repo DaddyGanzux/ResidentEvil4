@@ -13,8 +13,11 @@ namespace StarterAssets
 		public bool jump;
 		public bool sprint;
         public bool crouch;
+        public bool aim;
+		public bool shoot;
 
-		[Header("Movement Settings")]
+
+        [Header("Movement Settings")]
 		public bool analogMovement;
 
 		[Header("Mouse Cursor Settings")]
@@ -57,6 +60,17 @@ namespace StarterAssets
         {
             crouch = !crouch;
         }
+
+        public void OnAim(InputValue value)
+        {
+            AimInput(value.isPressed);
+        }
+
+        public void OnShoot(InputValue value)
+        {
+            ShootInput(value.isPressed);
+        }
+
 #endif
 
 
@@ -79,8 +93,12 @@ namespace StarterAssets
 		{
 			sprint = newSprintState;
 		}
-		
-		private void OnApplicationFocus(bool hasFocus)
+        public void AimInput(bool newAimState)
+        {
+            aim = newAimState;
+        }
+
+        private void OnApplicationFocus(bool hasFocus)
 		{
 			SetCursorState(cursorLocked);
 		}
@@ -89,6 +107,11 @@ namespace StarterAssets
 		{
 			Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
 		}
-	}
+
+        public void ShootInput(bool newShootState)
+        {
+            shoot = newShootState;
+        }
+    }
 	
 }
