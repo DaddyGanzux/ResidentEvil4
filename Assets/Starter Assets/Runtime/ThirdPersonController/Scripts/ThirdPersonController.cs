@@ -83,7 +83,7 @@ namespace StarterAssets
         [Tooltip("What layers the character uses as ground")]
         public LayerMask GroundLayers;
 
-        [Header("Cinemachine")]
+        [Header("Cinemachine Normal Clamps")]
         [Tooltip("The follow target set in the Cinemachine Virtual Camera that the camera will follow")]
         public GameObject CinemachineCameraTarget;
 
@@ -93,6 +93,14 @@ namespace StarterAssets
         [Tooltip("How far in degrees can you move the camera down")]
         public float BottomClamp = -30.0f;
 
+        [Header("Cinemachine Aim Clamps")]
+        [Tooltip("How far in degrees can you move the camera up while aiming")]
+        public float AimTopClamp = 80.0f;
+
+        [Tooltip("How far in degrees can you move the camera down while aiming")]
+        public float AimBottomClamp = -40.0f;
+
+        [Space(10)]
         [Tooltip("Additional degress to override the camera. Useful for fine tuning camera position when locked")]
         public float CameraAngleOverride = 0.0f;
 
@@ -214,11 +222,9 @@ namespace StarterAssets
         {
             if (CinemachineCameraTarget == null) return;
 
-            // Selecciona la altura según si está agachado
             float targetHeight = IsCrouched ? CrouchCameraTargetHeight : StandCameraTargetHeight;
             Vector3 currentPos = CinemachineCameraTarget.transform.localPosition;
 
-            // Interpola suavemente la posición Y local del Cinemachine Target
             float newY = Mathf.Lerp(currentPos.y, targetHeight, Time.deltaTime * CameraHeightSmoothTime);
             CinemachineCameraTarget.transform.localPosition = new Vector3(currentPos.x, newY, currentPos.z);
         }
@@ -263,15 +269,18 @@ namespace StarterAssets
                 _cinemachineTargetPitch += _input.look.y * deltaTimeMultiplier * Sensitivity;
             }
 
+            // Selecciona dinámicamente los límites según el estado de apuntado
+            float targetTopClamp = _input.aim ? AimTopClamp : TopClamp;
+            float targetBottomClamp = _input.aim ? AimBottomClamp : BottomClamp;
+
             _cinemachineTargetYaw = ClampAngle(_cinemachineTargetYaw, float.MinValue, float.MaxValue);
-            _cinemachineTargetPitch = ClampAngle(_cinemachineTargetPitch, BottomClamp, TopClamp);
+            _cinemachineTargetPitch = ClampAngle(_cinemachineTargetPitch, targetBottomClamp, targetTopClamp);
 
             CinemachineCameraTarget.transform.rotation = Quaternion.Euler(_cinemachineTargetPitch + CameraAngleOverride, _cinemachineTargetYaw, 0.0f);
         }
 
         private void HandleCrouch()
         {
-            // Si el personaje está apuntando, cancelamos la entrada de agacharse
             if (_input.aim)
             {
                 _input.crouch = false;
@@ -285,7 +294,6 @@ namespace StarterAssets
             }
             else if (!crouchInput && IsCrouched)
             {
-                // Verifica si hay techo arriba antes de levantarse
                 if (!CanStandUp())
                 {
                     IsCrouched = true;
@@ -342,19 +350,14 @@ namespace StarterAssets
             _animationBlend = Mathf.Lerp(_animationBlend, targetSpeed, Time.deltaTime * SpeedChangeRate);
             if (_animationBlend < 0.01f) _animationBlend = 0f;
 
-            bool isMoving = _input.move != Vector2.zero;
-
-            if (isMoving && !_input.aim)
-            {
-                _targetRotation = _mainCamera.transform.eulerAngles.y;
-                float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, _targetRotation, ref _rotationVelocity, RotationSmoothTime);
-                transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
-            }
+            _targetRotation = _mainCamera.transform.eulerAngles.y;
+            float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, _targetRotation, ref _rotationVelocity, RotationSmoothTime);
+            transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
 
             Vector3 targetDirection = (transform.forward * _input.move.y) + (transform.right * _input.move.x);
-
             _controller.Move(targetDirection.normalized * (_speed * Time.deltaTime) + new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
 
+            bool isMoving = _input.move != Vector2.zero;
             bool isStrafeLeft = _input.move.x < -0.1f;
             bool isStrafeRight = _input.move.x > 0.1f;
             bool isWalkingBack = _input.move.y < -0.1f;
@@ -372,24 +375,7 @@ namespace StarterAssets
                 _animator.SetBool(_animIDCrouchStrafeLeft, isStrafeLeft && IsCrouched);
                 _animator.SetBool(_animIDCrouchStrafeRight, isStrafeRight && IsCrouched);
                 _animator.SetBool(_animIDCrouchWalkingBack, isWalkingBack && IsCrouched);
-                bool isCrouchWalking = IsCrouched && _input.move != Vector2.zero;
-                _animator.SetBool(_animIDIsCrouchWalking, isCrouchWalking);
-            }
-
-            // Dentro del método Move():
-            if (_input.move != Vector2.zero)
-            {
-                Vector3 inputDirection = new Vector3(_input.move.x, 0.0f, _input.move.y).normalized;
-                _targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg + _mainCamera.transform.eulerAngles.y;
-
-                _targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg + _mainCamera.transform.eulerAngles.y;
-
-                // Solo gira el cuerpo hacia la dirección del paso si RotateOnMove está activo
-                if (RotateOnMove)
-                {
-                    float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, _targetRotation, ref _rotationVelocity, RotationSmoothTime);
-                    transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
-                }
+                _animator.SetBool(_animIDIsCrouchWalking, IsCrouched && isMoving);
             }
         }
 

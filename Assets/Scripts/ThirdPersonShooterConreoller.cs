@@ -2,6 +2,7 @@ using UnityEngine;
 using Unity.Cinemachine;
 using StarterAssets;
 using UnityEngine.InputSystem;
+using UnityEngine.Animations.Rigging; // Requerido para MultiAimConstraint
 
 public class ThirdPersonShooterConreoller : MonoBehaviour
 {
@@ -19,9 +20,12 @@ public class ThirdPersonShooterConreoller : MonoBehaviour
     [SerializeField] private GameObject pfBulletProjectile;
 
     [Header("IK Targets")]
-    [SerializeField] private Transform targetL; // Asigna TargetL en el Inspector
-    [SerializeField] private Transform targetR; // Asigna TargetR en el Inspector
+    [SerializeField] private Transform targetL;
+    [SerializeField] private Transform targetR;
     [SerializeField] private float ikTransitionSpeed = 10f;
+
+    [Header("Rigging Constraints")]
+    [SerializeField] private MultiAimConstraint spineAimConstraint; // Componente de la columna (Spine2)
 
     // Guardado de estado inicial (Idle)
     private Vector3 targetLInitialPos;
@@ -53,7 +57,6 @@ public class ThirdPersonShooterConreoller : MonoBehaviour
 
     private void Start()
     {
-        // Guardar las transformaciones locales iniciales del Idle
         if (targetL != null)
         {
             targetLInitialPos = targetL.localPosition;
@@ -87,31 +90,42 @@ public class ThirdPersonShooterConreoller : MonoBehaviour
         // 2. Lógica de Apuntado
         if (starterAssetsInputs.aim)
         {
-            // 1. Bloquea la rotación por movimiento de StarterAssets
             thirdPersonController.RotateOnMove = false;
 
-            // 2. Fuerza al personaje a alinearse siempre al frente de la cámara
             float targetRotation = mainCameraTransform.eulerAngles.y;
             transform.rotation = Quaternion.Euler(0.0f, targetRotation, 0.0f);
 
             aimVirtualCamera.gameObject.SetActive(true);
             puntoMira.SetActive(true);
+            if (debugTransform != null) debugTransform.gameObject.SetActive(true);
             thirdPersonController.SetSensitivity(aimSensitivity);
 
             MoveTargetLocal(targetL, targetLAimPos, targetLAimRot);
             MoveTargetLocal(targetR, targetRAimPos, targetRAimRot);
+
+            // Transición suave: reduce el peso del MultiAimConstraint a 0 al apuntar
+            if (spineAimConstraint != null)
+            {
+                spineAimConstraint.weight = Mathf.Lerp(spineAimConstraint.weight, 1f, Time.deltaTime * ikTransitionSpeed);
+            }
         }
         else
         {
-            // Restablece el movimiento estándar de StarterAssets
             thirdPersonController.RotateOnMove = true;
 
             aimVirtualCamera.gameObject.SetActive(false);
             puntoMira.SetActive(false);
+            if (debugTransform != null) debugTransform.gameObject.SetActive(false);
             thirdPersonController.SetSensitivity(normalSensitivity);
 
             MoveTargetLocal(targetL, targetLInitialPos, targetLInitialRot);
             MoveTargetLocal(targetR, targetRInitialPos, targetRInitialRot);
+
+            // Restablece el peso a 1 cuando vuelve a Idle
+            if (spineAimConstraint != null)
+            {
+                spineAimConstraint.weight = Mathf.Lerp(spineAimConstraint.weight, 0f, Time.deltaTime * ikTransitionSpeed);
+            }
         }
 
         // 3. Disparo
