@@ -102,6 +102,7 @@ namespace StarterAssets
         // cinemachine
         private float _cinemachineTargetYaw;
         private float _cinemachineTargetPitch;
+        public bool RotateOnMove { get; set; } = true;
 
         // player
         private float _speed;
@@ -270,6 +271,12 @@ namespace StarterAssets
 
         private void HandleCrouch()
         {
+            // Si el personaje está apuntando, cancelamos la entrada de agacharse
+            if (_input.aim)
+            {
+                _input.crouch = false;
+            }
+
             bool crouchInput = _input.crouch;
 
             if (crouchInput && Grounded)
@@ -278,6 +285,7 @@ namespace StarterAssets
             }
             else if (!crouchInput && IsCrouched)
             {
+                // Verifica si hay techo arriba antes de levantarse
                 if (!CanStandUp())
                 {
                     IsCrouched = true;
@@ -366,6 +374,22 @@ namespace StarterAssets
                 _animator.SetBool(_animIDCrouchWalkingBack, isWalkingBack && IsCrouched);
                 bool isCrouchWalking = IsCrouched && _input.move != Vector2.zero;
                 _animator.SetBool(_animIDIsCrouchWalking, isCrouchWalking);
+            }
+
+            // Dentro del método Move():
+            if (_input.move != Vector2.zero)
+            {
+                Vector3 inputDirection = new Vector3(_input.move.x, 0.0f, _input.move.y).normalized;
+                _targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg + _mainCamera.transform.eulerAngles.y;
+
+                _targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg + _mainCamera.transform.eulerAngles.y;
+
+                // Solo gira el cuerpo hacia la dirección del paso si RotateOnMove está activo
+                if (RotateOnMove)
+                {
+                    float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, _targetRotation, ref _rotationVelocity, RotationSmoothTime);
+                    transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
+                }
             }
         }
 
