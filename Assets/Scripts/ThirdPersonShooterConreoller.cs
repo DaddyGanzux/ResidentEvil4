@@ -33,12 +33,18 @@ public class ThirdPersonShooterConreoller : MonoBehaviour
     private Vector3 targetRInitialPos;
     private Quaternion targetRInitialRot;
 
+
     // Valores exactos para Apuntado (Aim) desde tus imágenes
-    private readonly Vector3 targetLAimPos = new Vector3(-1.45f, 3.15f, 0.96f);
+    private readonly Vector3 targetLAimPos = new Vector3(-1.45f, 4.94f, 0.96f);
     private readonly Quaternion targetLAimRot = Quaternion.Euler(-6.1f, -92.7f, 25.8f);
 
-    private readonly Vector3 targetRAimPos = new Vector3(-0.82f, 5.63f, -0.74f);
-    private readonly Quaternion targetRAimRot = Quaternion.Euler(2.192f, 99.965f, -24.601f);
+    [Header("Ajustes de Posición Aim Derecha")]
+    public Vector3 targetRAimPos = new Vector3(-0.82f, 5.63f, -0.74f);
+    //private Quaternion targetRAimPos => Quaternion.Euler(targetRAimEuler);
+
+    [Header("Ajustes de Rotación Aim Derecha")]
+    public Vector3 targetRAimEuler = new Vector3(-6.1f, 95.7f, 25.8f);
+    private Quaternion targetRAimRot => Quaternion.Euler(targetRAimEuler);
 
     private ThirdPersonController thirdPersonController;
     private StarterAssetsInputs starterAssetsInputs;

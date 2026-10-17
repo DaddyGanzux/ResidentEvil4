@@ -6100,7 +6100,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 1518690968}
+  m_Mesh: {fileID: 326240195}
 --- !u!33 &46918881
 MeshFilter:
   m_ObjectHideFlags: 10
@@ -14611,7 +14611,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 1816445398}
+  m_Mesh: {fileID: 363050417}
 --- !u!33 &161985672
 MeshFilter:
   m_ObjectHideFlags: 10
@@ -17459,7 +17459,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 380201913}
+  m_Mesh: {fileID: 718223009}
 --- !u!33 &178659219
 MeshFilter:
   m_ObjectHideFlags: 10
@@ -23250,7 +23250,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 162896439}
+  m_Mesh: {fileID: 2036217493}
 --- !u!33 &247312278
 MeshFilter:
   m_ObjectHideFlags: 10
@@ -27455,7 +27455,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 870857681}
+  m_Mesh: {fileID: 1726767227}
 --- !u!33 &297937949
 MeshFilter:
   m_ObjectHideFlags: 10
@@ -43433,7 +43433,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 1649660201}
+  m_Mesh: {fileID: 1035559518}
 --- !u!33 &464268112
 MeshFilter:
   m_ObjectHideFlags: 10
@@ -48999,7 +48999,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 2023865997}
+  m_Mesh: {fileID: 384887575}
 --- !u!33 &511105880
 MeshFilter:
   m_ObjectHideFlags: 10
@@ -60577,7 +60577,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 1095587990}
+  m_Mesh: {fileID: 604272815}
 --- !u!33 &659238813
 MeshFilter:
   m_ObjectHideFlags: 10
@@ -63352,7 +63352,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 2086822428}
+  m_Mesh: {fileID: 2050720031}
 --- !u!33 &689098917
 MeshFilter:
   m_ObjectHideFlags: 10
@@ -68236,7 +68236,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 1830602120}
+  m_Mesh: {fileID: 377325025}
 --- !u!33 &728616031
 MeshFilter:
   m_ObjectHideFlags: 10
@@ -99850,7 +99850,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 1826861276}
+  m_Mesh: {fileID: 1223157710}
 --- !u!33 &1052432856
 MeshFilter:
   m_ObjectHideFlags: 10
@@ -107679,7 +107679,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 409302319}
+  m_Mesh: {fileID: 1144415325}
 --- !u!33 &1139846543
 MeshFilter:
   m_ObjectHideFlags: 10
@@ -128966,7 +128966,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 1604090978}
+  m_Mesh: {fileID: 708919556}
 --- !u!33 &1357481080
 MeshFilter:
   m_ObjectHideFlags: 10
@@ -188848,6 +188848,135 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -2865104911859505335, guid: 7605c625fb121684dbe7e0498f21141b, type: 3}
+--- !u!1 &1976103491
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1976103493}
+  - component: {fileID: 1976103492}
+  m_Layer: 0
+  m_Name: Sonido
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!82 &1976103492
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1976103491}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 8300000, guid: 825c4f3345bff514a8fad6990dbc96a5, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 0.754
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!4 &1976103493
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1976103491}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 28.71584, y: 0.6557, z: 18.81667}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1976194872
 GameObject:
   m_ObjectHideFlags: 0
@@ -213288,6 +213417,8 @@ MonoBehaviour:
   targetR: {fileID: 837685497}
   ikTransitionSpeed: 10
   spineAimConstraint: {fileID: 497039953}
+  targetRAimPos: {x: -0.5, y: 7.42, z: -0.22}
+  targetRAimEuler: {x: -6.17, y: 92, z: -16}
 --- !u!114 &6982812146318033161
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -214109,3 +214240,4 @@ SceneRoots:
   - {fileID: 1111408107}
   - {fileID: 657923683}
   - {fileID: 304129719}
+  - {fileID: 1976103493}
